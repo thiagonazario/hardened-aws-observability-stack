@@ -1,0 +1,3 @@
+name: hardened-aws-observability-stack
+runtime: python
+description: AWS Observability Stack - Hardened by Design Framework
