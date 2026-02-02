@@ -5,21 +5,31 @@
 
 This repository implements a production-ready AWS infrastructure focused on the **Service Trinity** (Logs, Metrics, Tracing) with a zero-trust networking approach.
 
-## 🏗️ The Architecture
-Deployed in 24 seconds, the stack enforces:
-- **Private-First VPC:** No public IP mapping, high-security tagging.
-- **FinOps Optimized Tracing:** AWS X-Ray sampling rules set to 5% to balance visibility and cost.
-- **Centralized Monitoring:** Custom CloudWatch Dashboards for Core Service Health.
+## 🏗️ Architecture Blueprint
+Deployed via Pulumi in under 30 seconds, this stack enforces:
+- **Private-First VPC:** Isolated subnets without Internet Gateway (IGW) exposure.
+- **FinOps-Centric Tracing:** AWS X-Ray sampling rules at 5% to balance visibility and cost.
+- **Automated Observability:** Centralized CloudWatch Dashboards and Log Groups with 30-day retention.
 
-## 🛡️ Hardened Features
-- [x] **Isolation:** Resources deployed in private subnets without IGW exposure.
+## 🛡️ Hardened Implementation
+- [x] **Network Isolation:** No public IP mapping for resources.
 - [x] **Traceability:** Sampling rules labeled with `Standard: DevSecOps`.
-- [x] **Automation:** Pure Python logic for complex infrastructure orchestration.
+- [x] **Identity & Access:** IAM policies scoped to the principle of least privilege.
 
-## 📸 Proof of Concept
-| X-Ray Sampling Rule | Hardened VPC Map |
+## 📸 Technical Proof of Concept
+
+| Hardened VPC Resource Map | Live Telemetry Validation |
 |---|---|
-| ![X-Ray Proof](./img/xray-sampling.png) | ![VPC Proof](./img/vpc-map.png) |
+| ![VPC Map](./img/vpc-map.png) | ![Log Event](./img/log-event.png) |
 
----
-*Created by the Ghost Architect.*
+## 🛠️ Operational Validation (The "Ping")
+To verify the telemetry pipeline without deploying compute resources, run these commands via AWS CLI:
+
+```bash
+# 1. Create the log stream
+aws logs create-log-stream --log-group-name hardened-app-logs-c5745ac --log-stream-name "TestStream" --region us-east-1
+
+# 2. Send validation ping
+aws logs put-log-events --log-group-name hardened-app-logs-c5745ac --log-stream-name "TestStream" --log-events timestamp=$(date +%s%3N),message="Ghost Architect: Hardened Stack Validation Ping" --region us-east-1
+
+*Created by the Ghost Architect. Assets captured in English/Dark Mode for global standard compatibility.*
