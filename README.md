@@ -28,6 +28,7 @@ To verify the telemetry pipeline without deploying compute resources, run these 
 ```bash
 # 1. Create the log stream
 aws logs create-log-stream --log-group-name hardened-app-logs-c5745ac --log-stream-name "TestStream" --region us-east-1
+```
 
 # 2. Send validation ping
 aws logs put-log-events --log-group-name hardened-app-logs-c5745ac --log-stream-name "TestStream" --log-events timestamp=$(date +%s%3N),message="Ghost Architect: Hardened Stack Validation Ping" --region us-east-1
